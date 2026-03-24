@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@orpc/client": "^1.13.9",
+    "@orpc/openapi": "^1.13.9",
+    "@orpc/server": "^1.13.9",
+    "@orpc/zod": "^1.13.9",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.11",
+    "esbuild": "^0.27.4"
+  }
+}
