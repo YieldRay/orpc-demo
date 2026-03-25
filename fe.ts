@@ -13,7 +13,7 @@ window.fetch = async (input, init) => {
     request.headers.delete(HEADER);
     const response = await server.fetch(request);
     Object.defineProperty(response, "url", { value: request.url });
-    console.log("[DEBUG] Intercepted request to:", request, response);
+    console.log("[DEBUG] Intercepted request", request, response);
     return response;
   }
   return originalFetch(input, init);

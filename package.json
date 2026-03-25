@@ -1,10 +1,10 @@
 {
   "type": "module",
   "dependencies": {
-    "@orpc/client": "^1.13.9",
-    "@orpc/openapi": "^1.13.9",
-    "@orpc/server": "^1.13.9",
-    "@orpc/zod": "^1.13.9",
+    "@orpc/client": "^1.13.11",
+    "@orpc/openapi": "^1.13.11",
+    "@orpc/server": "^1.13.11",
+    "@orpc/zod": "^1.13.11",
     "zod": "^4.3.6"
   },
   "devDependencies": {
