@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <title>OpenAPI Reference</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <div id="app">
+      <pre style="color: #888; font-size: 12px; margin: 0; padding: 0">loading module-tsx library...</pre>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+    <script src="https://yieldray.github.io/module-tsx/dist/index.umd.js"></script>
+    <script>
+      const { ModuleTSX: M } = ModuleTSX;
+      const instance = new M({
+        resolveBareSpecifier: "https://esm.run/",
+      });
+      instance.addEventListener("*", (event) => {
+        const { type, payload } = event.detail;
+        document.getElementById("app").appendChild(
+          Object.assign(document.createElement("pre"), {
+            innerText: `${type}: ${JSON.stringify(payload)}`,
+            style: `color: ${type.endsWith(":error") ? "#f00" : "#888"}; font-size: 12px; margin: 0; padding: 0;`,
+          }),
+        );
+      });
+
+      instance.import("./fe.ts");
+    </script>
+    <!-- <script type="module-tsx" src="./fe.ts"></script> -->
+  </body>
+</html>

@@ -29,7 +29,7 @@ const generator = new OpenAPIGenerator({
   schemaConverters: [new ZodToJsonSchemaConverter()],
 });
 
-const spec = await generator.generate(router, {
+export const openapi = await generator.generate(router, {
   info: {
     title: "Planet API",
     version: "1.0.0",
@@ -43,7 +43,7 @@ export default createWebServer(async (request: Request) => {
     return Response.redirect(url, 302);
   }
   if (url.pathname === "/openapi.json") {
-    return new Response(JSON.stringify(spec), {
+    return new Response(JSON.stringify(openapi), {
       headers: { "Content-Type": "application/json; charset=utf-8" },
     });
   }
@@ -52,7 +52,6 @@ export default createWebServer(async (request: Request) => {
     return Response.redirect(url, 302);
   }
   if (url.pathname === "/openapi/") {
-    const js = "https://cdn.jsdelivr.net/npm/@scalar/api-reference";
     /** @see https://github.com/scalar/scalar/blob/main/documentation/configuration.md */
     const configuration = {
       favicon: "./favicon.ico",
@@ -68,30 +67,27 @@ export default createWebServer(async (request: Request) => {
       proxyUrl: url.searchParams.has("proxy") ? url.searchParams.get("proxy") || "https://proxy.scalar.com" : undefined,
       showSidebar: url.searchParams.has("showSidebar") && url.searchParams.get("showSidebar") !== "false",
     };
-    const toDatasetConfig = (input: unknown) => JSON.stringify(JSON.stringify(input));
 
     return new Response(
-      /*html*/ `<!DOCTYPE html>
+      /*html*/ `<!doctype html>
 <html>
-    <head>
-        <title>OpenAI API Reference</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="none" />
-        <link rel="preload" href="${js}" as="script" />
-        <link rel="preload" href="${configuration.url}" as="fetch" crossorigin />
-    </head>
-    <body>
-        <script id="api-reference"></script>
-        <script>
-            document.getElementById("api-reference").dataset.configuration = ${toDatasetConfig(configuration)};
-        </script>
-        <script src="${js}"></script>
-    </body>
+  <head>
+    <title>OpenAPI Reference</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+    <script>
+      Scalar.createApiReference('#app', ${JSON.stringify(configuration)});
+    </script>
+  </body>
 </html>`,
-      {
-        headers: { "Content-Type": "text/html; charset=utf-8" },
-      },
+      { headers: { "Content-Type": "text/html; charset=utf-8" } },
     );
   }
 
