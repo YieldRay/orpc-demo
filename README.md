@@ -17,8 +17,8 @@ A minimal demo of the [oRPC](https://orpc.unnoq.com) framework — a TypeScript-
 │   ├── main.ts      # Server entry point and request routing
 │   ├── router.ts    # API procedure definitions (planet endpoints)
 │   └── helper.ts    # WebServer utility
-├── index.html       # Browser-based demo with fetch interception
-├── fe.ts            # Frontend script for in-browser API execution
+├── index.html       # Browser-based Scalar API reference (standalone)
+├── fe.ts            # Intercepts Scalar's fetch calls and routes them to the oRPC server in-process
 ├── build.ts         # esbuild bundler script
 └── dist/main.js     # Compiled output (generated)
 ```
